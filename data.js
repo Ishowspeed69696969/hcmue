@@ -1038,3 +1038,450 @@ hb2:"Tin học"
 
 
 },
+  
+// =======================
+// CÁC NGÀNH KHÁC
+// =======================
+
+
+
+"7140203":{
+
+
+name:"Giáo dục Đặc biệt",
+
+
+combos:{
+
+
+C00DB:{
+
+base:"C00",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Địa lí"
+
+},
+
+
+D01DB:{
+
+base:"D01",
+dg:"Ngữ văn",
+hb1:"Toán",
+hb2:"Tiếng Anh"
+
+},
+
+
+X70DB:{
+
+base:"X70",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"GDKTPL"
+
+}
+
+
+
+}
+
+
+},
+
+
+
+
+
+
+"7140204":{
+
+
+name:"Giáo dục Công dân",
+
+
+combos:{
+
+
+C00CD:{
+
+base:"C00",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Địa lí"
+
+},
+
+
+D14CD:{
+
+base:"D14",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Tiếng Anh"
+
+},
+
+
+X70CD:{
+
+base:"X70",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"GDKTPL"
+
+}
+
+
+
+}
+
+
+},
+
+
+
+
+
+
+
+"7140205":{
+
+
+name:"Giáo dục Chính trị",
+
+
+combos:{
+
+
+C00CT:{
+
+base:"C00",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Địa lí"
+
+},
+
+
+D14CT:{
+
+base:"D14",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Tiếng Anh"
+
+}
+
+
+}
+
+
+},
+
+
+
+
+
+
+
+"7140208":{
+
+
+name:"Giáo dục Quốc phòng - An ninh",
+
+
+combos:{
+
+
+C00QP:{
+
+base:"C00",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Địa lí"
+
+},
+
+
+D01QP:{
+
+base:"D01",
+dg:"Ngữ văn",
+hb1:"Toán",
+hb2:"Tiếng Anh"
+
+}
+
+
+
+}
+
+
+},
+
+
+
+
+
+
+
+
+"7310401":{
+
+
+name:"Tâm lý học",
+
+
+combos:{
+
+
+C00TL:{
+
+base:"C00",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Địa lí"
+
+},
+
+
+D01TL:{
+
+base:"D01",
+dg:"Ngữ văn",
+hb1:"Toán",
+hb2:"Tiếng Anh"
+
+},
+
+
+D14TL:{
+
+base:"D14",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Tiếng Anh"
+
+}
+
+
+}
+
+
+},
+
+
+
+
+
+
+
+
+"7229001":{
+
+
+name:"Ngôn ngữ Anh (khối ngành khác)",
+
+
+combos:{
+
+
+D01TA:{
+
+base:"D01",
+dg:"Tiếng Anh",
+hb1:"Ngữ văn",
+hb2:"Toán"
+
+}
+
+}
+
+
+}
+
+},
+
+
+
+
+
+
+
+// =================================
+// PHÂN HIỆU LONG AN
+// =================================
+
+
+SPT:{
+
+
+
+"7140209":{
+
+name:"Sư phạm Toán học - Phân hiệu Long An",
+
+combos:{
+
+
+A00TO:{
+
+base:"A00",
+dg:"Toán",
+hb1:"Vật lí",
+hb2:"Hóa học"
+
+},
+
+
+A01TO:{
+
+base:"A01",
+dg:"Toán",
+hb1:"Vật lí",
+hb2:"Tiếng Anh"
+
+},
+
+
+D01TO:{
+
+base:"D01",
+dg:"Toán",
+hb1:"Ngữ văn",
+hb2:"Tiếng Anh"
+
+}
+
+
+}
+
+
+},
+
+
+
+
+
+"7140217":{
+
+name:"Sư phạm Ngữ văn - Phân hiệu Long An",
+
+combos:{
+
+
+C00VA:{
+
+base:"C00",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Địa lí"
+
+},
+
+
+D14VA:{
+
+base:"D14",
+dg:"Ngữ văn",
+hb1:"Lịch sử",
+hb2:"Tiếng Anh"
+
+}
+
+
+}
+
+
+}
+
+
+
+},
+
+
+
+
+
+
+
+// =================================
+// PHÂN HIỆU GIA LAI
+// =================================
+
+
+SPG:{
+
+
+
+"7140209":{
+
+name:"Sư phạm Toán học - Phân hiệu Gia Lai",
+
+combos:{
+
+
+A00TO:{
+
+base:"A00",
+dg:"Toán",
+hb1:"Vật lí",
+hb2:"Hóa học"
+
+},
+
+
+A01TO:{
+
+base:"A01",
+dg:"Toán",
+hb1:"Vật lí",
+hb2:"Tiếng Anh"
+
+}
+
+
+
+}
+
+
+},
+
+
+
+
+
+"7140213":{
+
+
+name:"Sư phạm Sinh học - Phân hiệu Gia Lai",
+
+
+combos:{
+
+
+B00SI:{
+
+base:"B00",
+dg:"Sinh học",
+hb1:"Toán",
+hb2:"Hóa học"
+
+}
+
+
+
+}
+
+
+}
+
+
+
+}
+
+
+
+};
