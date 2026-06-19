@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tính điểm xét tuyển SPS 2026</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<header>
+
+<h1>🎓 Tính điểm xét tuyển</h1>
+
+<p>
+ĐGNLCB + Học bạ 6 học kỳ
+</p>
+
+<div class="formula">
+ĐXT = (0.5 × ĐMC + 0.35 × HB1 + 0.15 × HB2) × 3 + ĐUT
+</div>
+
+</header>
+
+
+
+<section class="card">
+
+
+<h2>1. Chọn thông tin xét tuyển</h2>
+
+
+<label>Trường</label>
+
+<select id="school">
+
+<option value="">
+-- Chọn trường --
+</option>
+
+<option value="SPS">
+ĐH Sư phạm TP.HCM
+</option>
+
+<option value="SPT">
+Phân hiệu Long An
+</option>
+
+<option value="SPG">
+Phân hiệu Gia Lai
+</option>
+
+
+</select>
+
+
+
+<label>Ngành</label>
+
+<select id="major" disabled>
+
+<option>
+Chọn trường trước
+</option>
+
+</select>
+
+
+
+<label>Tổ hợp xét tuyển</label>
+
+
+<select id="combo" disabled>
+
+<option>
+Chọn ngành trước
+</option>
+
+</select>
+
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+
+<h2>2. Nhập điểm</h2>
+
+
+<div id="inputs">
+
+<p>
+Vui lòng chọn tổ hợp
+</p>
+
+
+</div>
+
+
+<label>
+Điểm ưu tiên
+</label>
+
+<input 
+id="priority"
+type="number"
+value="0"
+step="0.01"
+>
+
+
+
+<button onclick="calculate()">
+
+TÍNH ĐIỂM
+
+</button>
+
+
+
+<div id="result"></div>
+
+
+</section>
+
+
+
+<section class="card">
+
+
+<h2>Chi tiết tổ hợp</h2>
+
+
+<div id="detail">
+
+Chưa có dữ liệu
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
