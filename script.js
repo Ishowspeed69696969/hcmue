@@ -1,217 +1,70 @@
-// ===============================
-// DATABASE
-// Cấu trúc:
-// trường -> ngành -> tổ hợp
-// ===============================
+// ==========================================
+// SCRIPT.JS
+// Xử lý giao diện + tính điểm xét tuyển
+// Data nằm riêng trong data.js
+// ==========================================
 
 
-const admissionData = {
+// lấy element
 
+const schoolSelect = document.getElementById("school");
+const majorSelect = document.getElementById("major");
+const comboSelect = document.getElementById("combo");
 
-SPS: {
+const scoreArea = document.getElementById("scoreArea");
+const detailBox = document.getElementById("detail");
 
-
-"7140209": {
-
-name:"Sư phạm Toán học",
-
-combos:{
-
-
-"A00TO":{
-dg:"Toán",
-hb1:"Vật lý",
-hb2:"Hóa học"
-},
-
-
-"A01TO":{
-dg:"Toán",
-hb1:"Vật lý",
-hb2:"Tiếng Anh"
-},
-
-
-"X06TO":{
-dg:"Toán",
-hb1:"Vật lý",
-hb2:"Tin học"
-}
-
-
-}
-
-},
-
-
-
-
-"7140211": {
-
-name:"Sư phạm Vật lý",
-
-combos:{
-
-
-"A00LI":{
-dg:"Vật lý",
-hb1:"Toán",
-hb2:"Hóa học"
-},
-
-
-"A01LI":{
-dg:"Vật lý",
-hb1:"Toán",
-hb2:"Tiếng Anh"
-}
-
-
-}
-
-},
-
-
-
-
-"7140212": {
-
-name:"Sư phạm Hóa học",
-
-combos:{
-
-
-"A00HO":{
-dg:"Hóa học",
-hb1:"Toán",
-hb2:"Vật lý"
-},
-
-
-"B00HO":{
-dg:"Hóa học",
-hb1:"Toán",
-hb2:"Sinh học"
-}
-
-
-}
-
-},
-
-
-
-
-"7140231": {
-
-name:"Sư phạm Tiếng Anh",
-
-combos:{
-
-
-"D01TA":{
-dg:"Tiếng Anh",
-hb1:"Ngữ văn",
-hb2:"Toán"
-},
-
-
-"X79TA":{
-dg:"Tiếng Anh",
-hb1:"Ngữ văn",
-hb2:"Tin học"
-}
-
-
-}
-
-},
-
-
-
-
-"7220201": {
-
-name:"Ngôn ngữ Anh",
-
-combos:{
-
-
-"D01TA":{
-dg:"Tiếng Anh",
-hb1:"Ngữ văn",
-hb2:"Toán"
-}
-
-
-}
-
-}
-
-
-
-}
-
-};
-
-
-
-
-// Phân hiệu dùng cùng cấu trúc
-admissionData.SPT = structuredClone(admissionData.SPS);
-admissionData.SPG = structuredClone(admissionData.SPS);
-
-
+const calculateBtn =
+document.getElementById("calculateBtn");
 
 
 
 // ===============================
-// DOM
+// 1. CHỌN TRƯỜNG
 // ===============================
-
-
-const schoolSelect =
-document.getElementById("school");
-
-
-const majorSelect =
-document.getElementById("major");
-
-
-const comboSelect =
-document.getElementById("combo");
-
-
-
-const scoreArea =
-document.getElementById("scoreArea");
-
-
-
-
-
-// ===============================
-// CHỌN TRƯỜNG
-// ===============================
-
 
 schoolSelect.addEventListener(
 "change",
-()=>{
+loadMajors
+);
 
 
-majorSelect.innerHTML="";
 
-comboSelect.innerHTML="";
+function loadMajors(){
+
+
+majorSelect.innerHTML =
+`
+<option>
+-- Chọn ngành --
+</option>
+`;
+
+
+comboSelect.innerHTML =
+`
+<option>
+-- Chọn tổ hợp --
+</option>
+`;
+
+
+
+scoreArea.innerHTML =
+`
+<p>
+Vui lòng chọn tổ hợp
+</p>
+`;
+
 
 
 majorSelect.disabled=true;
-
 comboSelect.disabled=true;
 
 
 
-let school =
+const school =
 schoolSelect.value;
 
 
@@ -221,23 +74,24 @@ return;
 
 
 
-let majors =
+const majors =
 admissionData[school];
 
 
 
 Object.keys(majors)
-.forEach(id=>{
+.forEach(code=>{
 
 
-let option =
+const option =
 document.createElement("option");
 
 
-option.value=id;
+option.value = code;
+
 
 option.textContent =
-majors[id].name;
+majors[code].name;
 
 
 majorSelect.appendChild(option);
@@ -251,22 +105,13 @@ majorSelect.appendChild(option);
 majorSelect.disabled=false;
 
 
-loadCombos();
-
-
-
 }
-
-);
-
-
-
 
 
 
 
 // ===============================
-// CHỌN NGÀNH
+// 2. CHỌN NGÀNH
 // ===============================
 
 
@@ -282,28 +127,32 @@ loadCombos
 function loadCombos(){
 
 
-comboSelect.innerHTML="";
+comboSelect.innerHTML =
+`
+<option>
+-- Chọn tổ hợp --
+</option>
+`;
 
 
-let school =
+
+const school =
 schoolSelect.value;
 
 
-let major =
+const major =
 majorSelect.value;
 
 
 
-if(!school || !major)
+if(!major)
 return;
 
 
 
-let combos =
-admissionData
-[school]
-[major]
-.combos;
+const combos =
+admissionData[school][major].combos;
+
 
 
 
@@ -311,13 +160,15 @@ Object.keys(combos)
 .forEach(code=>{
 
 
-let option =
+const option =
 document.createElement("option");
 
 
-option.value=code;
+option.value = code;
 
-option.textContent=code;
+
+option.textContent =
+code;
 
 
 comboSelect.appendChild(option);
@@ -330,43 +181,38 @@ comboSelect.appendChild(option);
 comboSelect.disabled=false;
 
 
-renderInputs();
-
-
 }
 
 
 
 
 
-
 // ===============================
-// CHỌN TỔ HỢP
+// 3. CHỌN TỔ HỢP
 // ===============================
 
 
 comboSelect.addEventListener(
 "change",
-renderInputs
+renderScoreInput
 );
 
 
 
 
 
+function renderScoreInput(){
 
-function renderInputs(){
 
-
-let school =
+const school =
 schoolSelect.value;
 
 
-let major =
+const major =
 majorSelect.value;
 
 
-let combo =
+const combo =
 comboSelect.value;
 
 
@@ -376,7 +222,7 @@ return;
 
 
 
-let info =
+const info =
 admissionData
 [school]
 [major]
@@ -385,18 +231,21 @@ admissionData
 
 
 
-scoreArea.innerHTML=
 
+scoreArea.innerHTML = `
 
-`
 
 <div class="score-box">
 
+
 <h3>
-ĐMC × 0.5
+ĐGNL chuyên biệt × 0.5
 </h3>
 
-<p>Môn: ${info.dg}</p>
+
+<p>
+Môn: <b>${info.dg}</b>
+</p>
 
 
 <input
@@ -407,7 +256,7 @@ type="number"
 
 step="0.01"
 
-placeholder="Điểm ${info.dg}"
+placeholder="Nhập điểm ${info.dg}"
 
 >
 
@@ -417,13 +266,18 @@ placeholder="Điểm ${info.dg}"
 
 
 
+
 <div class="score-box">
+
 
 <h3>
 Học bạ 1 × 0.35
 </h3>
 
-<p>Môn: ${info.hb1}</p>
+
+<p>
+Môn: <b>${info.hb1}</b>
+</p>
 
 
 <input
@@ -434,7 +288,7 @@ type="number"
 
 step="0.01"
 
-placeholder="Điểm ${info.hb1}"
+placeholder="Nhập điểm ${info.hb1}"
 
 >
 
@@ -445,14 +299,18 @@ placeholder="Điểm ${info.hb1}"
 
 
 
+
 <div class="score-box">
+
 
 <h3>
 Học bạ 2 × 0.15
 </h3>
 
 
-<p>Môn: ${info.hb2}</p>
+<p>
+Môn: <b>${info.hb2}</b>
+</p>
 
 
 <input
@@ -463,36 +321,58 @@ type="number"
 
 step="0.01"
 
-placeholder="Điểm ${info.hb2}"
+placeholder="Nhập điểm ${info.hb2}"
 
 >
 
 
 </div>
 
+
+
 `;
 
 
 
-document.getElementById("detail")
-.innerHTML =
 
 
-`
+detailBox.innerHTML = `
 
-<b>${combo}</b>
+
+<span class="badge">
+
+${combo}
+
+</span>
+
 
 <br><br>
 
-ĐGNL: ${info.dg}
+
+Mã tổ hợp gốc:
+<b>${info.base}</b>
+
 
 <br>
 
-HB1: ${info.hb1}
+
+ĐGNL:
+${info.dg}
+
 
 <br>
 
-HB2: ${info.hb2}
+
+HB1:
+${info.hb1}
+
+
+<br>
+
+
+HB2:
+${info.hb2}
+
 
 `;
 
@@ -504,18 +384,14 @@ HB2: ${info.hb2}
 
 
 
-
-
 // ===============================
-// TÍNH ĐIỂM
+// 4. TÍNH ĐIỂM
 // ===============================
 
 
-document
-.getElementById("calculateBtn")
-.addEventListener(
+calculateBtn.addEventListener(
 "click",
-calculate
+calculateScore
 );
 
 
@@ -523,36 +399,34 @@ calculate
 
 
 
+function calculateScore(){
 
-function calculate(){
 
-
-let dg =
+const dg =
 Number(
-document.getElementById("dgScore").value
+document.getElementById("dgScore")?.value
 );
 
 
 
-let hb1 =
+const hb1 =
 Number(
-document.getElementById("hb1Score").value
+document.getElementById("hb1Score")?.value
 );
 
 
 
-let hb2 =
+const hb2 =
 Number(
-document.getElementById("hb2Score").value
+document.getElementById("hb2Score")?.value
 );
-
 
 
 
 if(
-!dg ||
-!hb1 ||
-!hb2
+isNaN(dg) ||
+isNaN(hb1) ||
+isNaN(hb2)
 ){
 
 alert(
@@ -567,29 +441,39 @@ return;
 
 
 
-let beforePriority =
+
+// điểm chưa ưu tiên
+
+
+const beforePriority =
 
 (
-0.5*dg
+0.5 * dg
 +
-0.35*hb1
+0.35 * hb1
 +
-0.15*hb2
+0.15 * hb2
 
-)*3;
-
-
-
+)
+*3;
 
 
-let region =
+
+
+
+
+
+// ưu tiên
+
+
+const region =
 Number(
 document.getElementById("region").value
 );
 
 
 
-let object =
+const object =
 Number(
 document.getElementById("object").value
 );
@@ -598,35 +482,33 @@ document.getElementById("object").value
 
 
 
-let priorityBase =
+const priorityOriginal =
 region + object;
 
 
 
-let priorityFinal;
 
 
+let priorityReal;
 
 
 
 if(beforePriority >=22.5){
 
 
-priorityFinal =
+priorityReal =
 
 ((30-beforePriority)/7.5)
 *
-priorityBase;
-
+priorityOriginal;
 
 
 }
-
 else{
 
 
-priorityFinal =
-priorityBase;
+priorityReal =
+priorityOriginal;
 
 
 }
@@ -634,35 +516,46 @@ priorityBase;
 
 
 
-if(priorityFinal<0)
-priorityFinal=0;
+
+if(priorityReal<0)
+priorityReal=0;
 
 
 
 
 
-let finalScore =
-beforePriority + priorityFinal;
+const finalScore =
+
+beforePriority
++
+priorityReal;
+
+
 
 
 
 
 
 document.getElementById("priorityBox")
-.innerHTML =
+.innerHTML = `
 
-
-`
 
 Điểm ưu tiên gốc:
 
-<b>${priorityBase.toFixed(2)}</b>
+<b>
+${priorityOriginal.toFixed(2)}
+</b>
+
 
 <br>
 
-Điểm ưu tiên thực tế:
 
-<b>${priorityFinal.toFixed(2)}</b>
+Điểm ưu tiên thực:
+
+<b>
+${priorityReal.toFixed(2)}
+</b>
+
 
 `;
 
@@ -670,33 +563,50 @@ document.getElementById("priorityBox")
 
 
 
-let result =
+
+const result =
 document.getElementById("result");
+
 
 
 result.classList.remove("hidden");
 
 
 
-result.innerHTML =
+result.innerHTML = `
 
-
-`
 
 Điểm xét tuyển:
 
+
 <br>
 
+
+<strong>
 ${finalScore.toFixed(2)}
+</strong>
+
+
 
 <br><br>
 
+
 <small>
+
 
 Điểm trước ưu tiên:
 ${beforePriority.toFixed(2)}
 
+
+<br>
+
+
+Ưu tiên:
+${priorityReal.toFixed(2)}
+
+
 </small>
+
 
 `;
 
