@@ -1,4 +1,11 @@
-const data = {
+// ===============================
+// DATABASE
+// Cấu trúc:
+// trường -> ngành -> tổ hợp
+// ===============================
+
+
+const admissionData = {
 
 
 SPS: {
@@ -39,7 +46,6 @@ hb2:"Tin học"
 
 
 
-
 "7140211": {
 
 name:"Sư phạm Vật lý",
@@ -58,23 +64,12 @@ hb2:"Hóa học"
 dg:"Vật lý",
 hb1:"Toán",
 hb2:"Tiếng Anh"
-},
-
-
-"X07LI":{
-dg:"Vật lý",
-hb1:"Toán",
-hb2:"Công nghệ"
 }
 
 
 }
 
-
 },
-
-
-
 
 
 
@@ -97,125 +92,63 @@ hb2:"Vật lý"
 dg:"Hóa học",
 hb1:"Toán",
 hb2:"Sinh học"
-},
-
-
-"D07HO":{
-dg:"Hóa học",
-hb1:"Toán",
-hb2:"Tiếng Anh"
 }
-
 
 
 }
 
-
 },
-
-
-
-
-
-
-
-"7140213": {
-
-name:"Sư phạm Sinh học",
-
-combos:{
-
-
-"B00SI":{
-dg:"Sinh học",
-hb1:"Toán",
-hb2:"Hóa học"
-},
-
-
-"D08SI":{
-dg:"Sinh học",
-hb1:"Toán",
-hb2:"Tiếng Anh"
-}
-
-
-
-}
-
-
-},
-
-
-
 
 
 
 
 "7140231": {
 
-
 name:"Sư phạm Tiếng Anh",
-
 
 combos:{
 
 
-
 "D01TA":{
-
 dg:"Tiếng Anh",
 hb1:"Ngữ văn",
 hb2:"Toán"
-
 },
-
 
 
 "X79TA":{
-
 dg:"Tiếng Anh",
 hb1:"Ngữ văn",
 hb2:"Tin học"
-
 }
 
 
-
 }
-
 
 },
 
 
 
 
-
-
-
-"7220201":{
-
+"7220201": {
 
 name:"Ngôn ngữ Anh",
-
 
 combos:{
 
 
 "D01TA":{
-
 dg:"Tiếng Anh",
 hb1:"Ngữ văn",
 hb2:"Toán"
-
-}
-
-
-
 }
 
 
 }
+
+}
+
+
 
 }
 
@@ -224,50 +157,77 @@ hb2:"Toán"
 
 
 
-// phân hiệu dùng chung dữ liệu
-
-data.SPT = data.SPS;
-
-data.SPG = data.SPS;
+// Phân hiệu dùng cùng cấu trúc
+admissionData.SPT = structuredClone(admissionData.SPS);
+admissionData.SPG = structuredClone(admissionData.SPS);
 
 
 
 
 
-const school =
+// ===============================
+// DOM
+// ===============================
+
+
+const schoolSelect =
 document.getElementById("school");
 
 
-const major =
+const majorSelect =
 document.getElementById("major");
 
 
-const combo =
+const comboSelect =
 document.getElementById("combo");
 
 
 
-school.onchange=function(){
+const scoreArea =
+document.getElementById("scoreArea");
 
 
-major.innerHTML="";
-
-combo.innerHTML="";
 
 
-if(!this.value){
 
-major.disabled=true;
+// ===============================
+// CHỌN TRƯỜNG
+// ===============================
 
-combo.disabled=true;
 
+schoolSelect.addEventListener(
+"change",
+()=>{
+
+
+majorSelect.innerHTML="";
+
+comboSelect.innerHTML="";
+
+
+majorSelect.disabled=true;
+
+comboSelect.disabled=true;
+
+
+
+let school =
+schoolSelect.value;
+
+
+
+if(!school)
 return;
 
-}
+
+
+let majors =
+admissionData[school];
 
 
 
-for(let id in data[this.value]){
+Object.keys(majors)
+.forEach(id=>{
 
 
 let option =
@@ -277,23 +237,27 @@ document.createElement("option");
 option.value=id;
 
 option.textContent =
-data[this.value][id].name;
+majors[id].name;
 
 
-major.appendChild(option);
+majorSelect.appendChild(option);
+
+
+
+});
+
+
+
+majorSelect.disabled=false;
+
+
+loadCombos();
+
 
 
 }
 
-
-
-major.disabled=false;
-
-
-loadCombo();
-
-
-};
+);
 
 
 
@@ -301,75 +265,127 @@ loadCombo();
 
 
 
-major.onchange=loadCombo;
+// ===============================
+// CHỌN NGÀNH
+// ===============================
 
 
-combo.onchange=showInput;
-
-
-
-
-
-
-function loadCombo(){
-
-
-combo.innerHTML="";
-
-
-let s=school.value;
-
-let m=major.value;
-
-
-let list =
-data[s][m].combos;
+majorSelect.addEventListener(
+"change",
+loadCombos
+);
 
 
 
-for(let id in list){
+
+
+function loadCombos(){
+
+
+comboSelect.innerHTML="";
+
+
+let school =
+schoolSelect.value;
+
+
+let major =
+majorSelect.value;
+
+
+
+if(!school || !major)
+return;
+
+
+
+let combos =
+admissionData
+[school]
+[major]
+.combos;
+
+
+
+Object.keys(combos)
+.forEach(code=>{
 
 
 let option =
 document.createElement("option");
 
 
-option.value=id;
+option.value=code;
+
+option.textContent=code;
 
 
-option.textContent=id;
+comboSelect.appendChild(option);
 
 
-combo.appendChild(option);
+});
+
+
+
+comboSelect.disabled=false;
+
+
+renderInputs();
 
 
 }
 
 
-combo.disabled=false;
-
-
-showInput();
-
-
-}
 
 
 
 
+// ===============================
+// CHỌN TỔ HỢP
+// ===============================
 
 
-function showInput(){
-
-
-let c =
-data[school.value]
-[major.value]
-.combos[combo.value];
+comboSelect.addEventListener(
+"change",
+renderInputs
+);
 
 
 
-document.getElementById("scoreArea").innerHTML=
+
+
+
+function renderInputs(){
+
+
+let school =
+schoolSelect.value;
+
+
+let major =
+majorSelect.value;
+
+
+let combo =
+comboSelect.value;
+
+
+
+if(!combo)
+return;
+
+
+
+let info =
+admissionData
+[school]
+[major]
+.combos[combo];
+
+
+
+
+scoreArea.innerHTML=
 
 
 `
@@ -380,20 +396,23 @@ document.getElementById("scoreArea").innerHTML=
 ĐMC × 0.5
 </h3>
 
-<p>
-Môn: ${c.dg}
-</p>
+<p>Môn: ${info.dg}</p>
 
-<input 
-id="dgnl"
+
+<input
+
+id="dgScore"
+
 type="number"
+
 step="0.01"
-placeholder="Nhập điểm ${c.dg}"
+
+placeholder="Điểm ${info.dg}"
+
 >
 
 
 </div>
-
 
 
 
@@ -404,15 +423,19 @@ placeholder="Nhập điểm ${c.dg}"
 Học bạ 1 × 0.35
 </h3>
 
-<p>
-Môn: ${c.hb1}
-</p>
+<p>Môn: ${info.hb1}</p>
 
-<input 
-id="hb1"
+
+<input
+
+id="hb1Score"
+
 type="number"
+
 step="0.01"
-placeholder="Nhập điểm ${c.hb1}"
+
+placeholder="Điểm ${info.hb1}"
+
 >
 
 
@@ -428,15 +451,20 @@ placeholder="Nhập điểm ${c.hb1}"
 Học bạ 2 × 0.15
 </h3>
 
-<p>
-Môn: ${c.hb2}
-</p>
 
-<input 
-id="hb2"
+<p>Môn: ${info.hb2}</p>
+
+
+<input
+
+id="hb2Score"
+
 type="number"
+
 step="0.01"
-placeholder="Nhập điểm ${c.hb2}"
+
+placeholder="Điểm ${info.hb2}"
+
 >
 
 
@@ -446,74 +474,89 @@ placeholder="Nhập điểm ${c.hb2}"
 
 
 
+document.getElementById("detail")
+.innerHTML =
 
-document.getElementById("detail").innerHTML=
 
 `
 
-<span class="badge">
-${combo.value}
-</span>
-
+<b>${combo}</b>
 
 <br><br>
 
-ĐGNL:
-${c.dg}
+ĐGNL: ${info.dg}
 
 <br>
 
-HB1:
-${c.hb1}
+HB1: ${info.hb1}
 
 <br>
 
-HB2:
-${c.hb2}
+HB2: ${info.hb2}
 
 `;
 
 
 
 }
-const calculateBtn =
-document.getElementById("calculateBtn");
 
 
 
-calculateBtn.onclick=function(){
 
 
-let dgnl =
-parseFloat(
-document.getElementById("dgnl").value
+
+
+// ===============================
+// TÍNH ĐIỂM
+// ===============================
+
+
+document
+.getElementById("calculateBtn")
+.addEventListener(
+"click",
+calculate
+);
+
+
+
+
+
+
+
+function calculate(){
+
+
+let dg =
+Number(
+document.getElementById("dgScore").value
 );
 
 
 
 let hb1 =
-parseFloat(
-document.getElementById("hb1").value
+Number(
+document.getElementById("hb1Score").value
 );
 
 
 
 let hb2 =
-parseFloat(
-document.getElementById("hb2").value
+Number(
+document.getElementById("hb2Score").value
 );
 
 
 
 
 if(
-isNaN(dgnl) ||
-isNaN(hb1) ||
-isNaN(hb2)
+!dg ||
+!hb1 ||
+!hb2
 ){
 
 alert(
-"Vui lòng nhập đầy đủ điểm"
+"Vui lòng nhập đủ điểm"
 );
 
 return;
@@ -524,12 +567,10 @@ return;
 
 
 
-// điểm trước ưu tiên
-
-let diemTruocUT =
+let beforePriority =
 
 (
-0.5*dgnl
+0.5*dg
 +
 0.35*hb1
 +
@@ -541,18 +582,15 @@ let diemTruocUT =
 
 
 
-
-// lấy ưu tiên
-
 let region =
-parseFloat(
+Number(
 document.getElementById("region").value
 );
 
 
 
 let object =
-parseFloat(
+Number(
 document.getElementById("object").value
 );
 
@@ -560,37 +598,25 @@ document.getElementById("object").value
 
 
 
-// điểm ưu tiên gốc
-
-let uuTienGoc =
+let priorityBase =
 region + object;
 
 
 
-
-
-
-let uuTienThuc;
+let priorityFinal;
 
 
 
 
-// quy đổi ưu tiên 2026
+
+if(beforePriority >=22.5){
 
 
-if(diemTruocUT >= 22.5){
+priorityFinal =
 
-
-uuTienThuc =
-
-(
-(30-diemTruocUT)
-/7.5
-)
-
+((30-beforePriority)/7.5)
 *
-
-uuTienGoc;
+priorityBase;
 
 
 
@@ -599,8 +625,8 @@ uuTienGoc;
 else{
 
 
-uuTienThuc =
-uuTienGoc;
+priorityFinal =
+priorityBase;
 
 
 }
@@ -608,49 +634,37 @@ uuTienGoc;
 
 
 
-
-
-if(uuTienThuc<0){
-
-uuTienThuc=0;
-
-}
-
+if(priorityFinal<0)
+priorityFinal=0;
 
 
 
 
 
 let finalScore =
-
-diemTruocUT
-+
-uuTienThuc;
-
+beforePriority + priorityFinal;
 
 
 
 
 
 document.getElementById("priorityBox")
-.innerHTML=
+.innerHTML =
+
 
 `
 
 Điểm ưu tiên gốc:
 
-<b>${uuTienGoc.toFixed(2)}</b>
+<b>${priorityBase.toFixed(2)}</b>
 
 <br>
 
-
 Điểm ưu tiên thực tế:
 
-<b>${uuTienThuc.toFixed(2)}</b>
+<b>${priorityFinal.toFixed(2)}</b>
 
 `;
-
-
 
 
 
@@ -660,12 +674,12 @@ let result =
 document.getElementById("result");
 
 
-
 result.classList.remove("hidden");
 
 
 
-result.innerHTML=
+result.innerHTML =
+
 
 `
 
@@ -675,43 +689,17 @@ result.innerHTML=
 
 ${finalScore.toFixed(2)}
 
-
 <br><br>
 
-
-<div style="font-size:16px">
-
+<small>
 
 Điểm trước ưu tiên:
-${diemTruocUT.toFixed(2)}
+${beforePriority.toFixed(2)}
 
-
-<br>
-
-
-Ưu tiên quy đổi:
-${uuTienThựcFormat(uuTienThuc)}
-
-
-</div>
-
+</small>
 
 `;
 
 
-
-
-};
-
-
-
-
-
-
-
-
-function uuTienThựcFormat(value){
-
-return value.toFixed(2);
 
 }
