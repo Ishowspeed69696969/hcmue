@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Tính điểm xét tuyển SPS 2026</title>
@@ -13,25 +14,35 @@
 </head>
 
 
+
 <body>
 
 
-<div class="app">
+<div class="container">
 
 
-<header>
 
-<h1>🎓 Tính điểm xét tuyển</h1>
+<header class="hero">
+
+<h1>🎓 Công cụ tính điểm xét tuyển 2026</h1>
 
 <p>
 ĐGNLCB + Học bạ 6 học kỳ
 </p>
 
+
 <div class="formula">
-ĐXT = (0.5 × ĐMC + 0.35 × HB1 + 0.15 × HB2) × 3 + ĐUT
+
+ĐXT = (0.5×ĐMC + 0.35×HB1 + 0.15×HB2)×3 + ĐƯT
+
 </div>
 
+
 </header>
+
+
+
+
 
 
 
@@ -43,38 +54,57 @@
 
 <label>Trường</label>
 
+
 <select id="school">
 
 <option value="">
 -- Chọn trường --
 </option>
 
+
 <option value="SPS">
-ĐH Sư phạm TP.HCM
+
+Đại học Sư phạm TP.HCM (SPS)
+
 </option>
+
 
 <option value="SPT">
-Phân hiệu Long An
+
+Phân hiệu Long An (SPT)
+
 </option>
 
+
 <option value="SPG">
-Phân hiệu Gia Lai
+
+Phân hiệu Gia Lai (SPG)
+
 </option>
 
 
 </select>
+
+
+
 
 
 
 <label>Ngành</label>
 
+
 <select id="major" disabled>
 
 <option>
+
 Chọn trường trước
+
 </option>
 
 </select>
+
+
+
 
 
 
@@ -84,14 +114,22 @@ Chọn trường trước
 <select id="combo" disabled>
 
 <option>
+
 Chọn ngành trước
+
 </option>
+
 
 </select>
 
 
 
+
 </section>
+
+
+
+
 
 
 
@@ -103,53 +141,172 @@ Chọn ngành trước
 <h2>2. Nhập điểm</h2>
 
 
-<div id="inputs">
+<div id="scoreArea">
+
 
 <p>
-Vui lòng chọn tổ hợp
+
+Chưa chọn tổ hợp
+
 </p>
 
 
 </div>
 
 
-<label>
-Điểm ưu tiên
-</label>
-
-<input 
-id="priority"
-type="number"
-value="0"
-step="0.01"
->
-
-
-
-<button onclick="calculate()">
-
-TÍNH ĐIỂM
-
-</button>
-
-
-
-<div id="result"></div>
 
 
 </section>
+
+
+
+
+
+
 
 
 
 <section class="card">
 
 
-<h2>Chi tiết tổ hợp</h2>
+<h2>3. Thông tin ưu tiên</h2>
+
+
+
+<label>
+
+Khu vực
+
+</label>
+
+
+<select id="region">
+
+
+<option value="0">
+
+Không ưu tiên
+
+</option>
+
+
+<option value="0.75">
+
+KV1 (+0.75)
+
+</option>
+
+
+<option value="0.5">
+
+KV2-NT (+0.5)
+
+</option>
+
+
+<option value="0.25">
+
+KV2 (+0.25)
+
+</option>
+
+
+</select>
+
+
+
+
+
+
+<label>
+
+Đối tượng
+
+</label>
+
+
+<select id="object">
+
+
+<option value="0">
+
+Không ưu tiên
+
+</option>
+
+
+<option value="2">
+
+UT1 (+2.0)
+
+</option>
+
+
+<option value="1">
+
+UT2 (+1.0)
+
+</option>
+
+
+</select>
+
+
+
+
+
+<div id="priorityBox">
+
+Điểm ưu tiên gốc:
+0
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<button id="calculateBtn">
+
+TÍNH ĐIỂM XÉT TUYỂN
+
+</button>
+
+
+
+
+
+
+
+<div id="result" class="result hidden">
+
+
+</div>
+
+
+
+
+
+
+
+<section class="card">
+
+
+<h2>Chi tiết</h2>
 
 
 <div id="detail">
 
-Chưa có dữ liệu
+Chưa có
 
 </div>
 
@@ -157,7 +314,12 @@ Chưa có dữ liệu
 </section>
 
 
+
+
+
 </div>
+
+
 
 
 
